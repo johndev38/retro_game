@@ -128,14 +128,16 @@ function sendJson(res, statusCode, data) {
 }
 
 function serveStatic(req, res) {
-  const filePath = req.url === '/' ? '/index.html' : req.url;
-  const normalized = path.normalize(filePath).replace(/^\.+/, '');
-  const fullPath = path.join(PUBLIC_DIR, normalized);
+  const pathname = new URL(req.url, `http://${req.headers.host}`).pathname;
+  const requestedPath = pathname === '/' ? 'index.html' : pathname.replace(/^\/+/, '');
+  const normalized = path.normalize(requestedPath);
 
-  if (!fullPath.startsWith(PUBLIC_DIR)) {
+  if (normalized.startsWith('..') || path.isAbsolute(normalized)) {
     sendJson(res, 403, { error: 'Accès refusé' });
     return;
   }
+
+  const fullPath = path.join(PUBLIC_DIR, normalized);
 
   fs.readFile(fullPath, (err, content) => {
     if (err) {
@@ -147,7 +149,8 @@ function serveStatic(req, res) {
     const mimeTypes = {
       '.html': 'text/html; charset=utf-8',
       '.js': 'application/javascript; charset=utf-8',
-      '.css': 'text/css; charset=utf-8'
+      '.css': 'text/css; charset=utf-8',
+      '.svg': 'image/svg+xml; charset=utf-8'
     };
 
     res.writeHead(200, { 'Content-Type': mimeTypes[ext] || 'application/octet-stream' });
