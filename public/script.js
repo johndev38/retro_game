@@ -18,22 +18,6 @@ let room = null;
 let selectedRole = null;
 let events = null;
 
-const normalizeRole = (role) => (role || 'none').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-
-const tileSpriteByType = {
-  plains: '/assets/tiles/plains.svg',
-  volcano: '/assets/tiles/volcano.svg',
-  forest: '/assets/tiles/forest.svg',
-  lake: '/assets/tiles/lake.svg'
-};
-
-const charSpriteByRole = {
-  mage: '/assets/chars/mage.svg',
-  nain: '/assets/chars/nain.svg',
-  rodeur: '/assets/chars/rodeur.svg',
-  barde: '/assets/chars/barde.svg'
-};
-
 async function api(path, payload) {
   const response = await fetch(path, {
     method: 'POST',
@@ -54,13 +38,6 @@ function drawMap() {
   map.flat().forEach((tileType) => {
     const tile = document.createElement('div');
     tile.className = `tile ${tileType}`;
-
-    const img = document.createElement('img');
-    img.className = 'tile-sprite';
-    img.alt = tileType;
-    img.src = tileSpriteByType[tileType] || tileSpriteByType.plains;
-    tile.appendChild(img);
-
     game.appendChild(tile);
   });
 }
@@ -89,7 +66,6 @@ function drawRoles() {
 }
 
 function drawPlayers() {
-  if (!map.length || !map[0]?.length) return;
   document.querySelectorAll('.player').forEach((node) => node.remove());
 
   players.forEach((p) => {
@@ -99,14 +75,8 @@ function drawPlayers() {
 
     const avatar = document.createElement('div');
     avatar.className = 'player';
+    avatar.style.background = p.color;
     avatar.dataset.name = p.name;
-
-    const roleId = normalizeRole(p.role);
-    const sprite = document.createElement('img');
-    sprite.className = 'player-sprite';
-    sprite.alt = p.role || 'unknown';
-    sprite.src = charSpriteByRole[roleId] || charSpriteByRole.mage;
-    avatar.appendChild(sprite);
 
     tile.appendChild(avatar);
 
@@ -153,8 +123,10 @@ joinBtn.addEventListener('click', async () => {
     map = data.map;
     roles = data.roles;
     zoneIdeas = data.zoneIdeas;
-    drawMap();
     syncState(data.players);
+    drawMap();
+    drawRoles();
+    drawPlayers();
     connectEvents();
 
     roomInfo.textContent = `Connecté à la salle: ${room}`;

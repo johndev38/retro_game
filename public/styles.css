@@ -12,9 +12,7 @@
 body {
   margin: 0;
   color: var(--ink);
-  background:
-    radial-gradient(circle at 20% 10%, #2b4f9d 0 18%, transparent 19%),
-    linear-gradient(var(--bg-2), var(--bg-1));
+  background: linear-gradient(var(--bg-2), var(--bg-1));
   font-family: var(--pixel);
 }
 
@@ -27,9 +25,8 @@ body {
 .panel { padding: 14px; }
 
 .left {
-  background: linear-gradient(#132557, #0f1c3d);
+  background: var(--panel);
   border-right: 4px solid var(--accent);
-  box-shadow: inset -8px 0 0 rgba(0, 0, 0, 0.2);
 }
 
 h1, h2 {
@@ -38,9 +35,14 @@ h1, h2 {
   letter-spacing: 0.5px;
 }
 
-.subtitle, .description { color: #c3caff; }
+.subtitle, .description {
+  color: #b8c2ff;
+}
 
-label { display: block; margin-top: 8px; }
+label {
+  display: block;
+  margin-top: 8px;
+}
 
 input, button {
   width: 100%;
@@ -55,7 +57,10 @@ input, button {
 button { cursor: pointer; }
 button:hover { filter: brightness(1.08); }
 
-.roles { display: grid; gap: 8px; }
+.roles {
+  display: grid;
+  gap: 8px;
+}
 
 .role-btn {
   text-align: left;
@@ -75,59 +80,38 @@ button:hover { filter: brightness(1.08); }
 }
 
 .game {
-  width: min(100%, 980px);
+  width: min(100%, 960px);
   margin: 0 auto;
   aspect-ratio: 24 / 16;
-  border: 8px solid var(--accent);
+  border: 6px solid var(--accent);
   display: grid;
   grid-template-columns: repeat(24, 1fr);
   grid-template-rows: repeat(16, 1fr);
   image-rendering: pixelated;
   background: #000;
-  box-shadow: 0 0 0 6px #0c0f24, 0 12px 30px rgba(0, 0, 0, 0.35);
 }
 
-.tile {
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  position: relative;
-  overflow: hidden;
-}
-
-.tile-sprite {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  image-rendering: pixelated;
-}
+.tile { border: 1px solid rgba(0,0,0,0.18); }
+.plains { background: #5fb84f; }
+.volcano { background: #ea4a3d; }
+.forest { background: #2e8f6c; }
+.lake { background: #459ce3; }
 
 .player {
   width: 100%;
   height: 100%;
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: grid;
-  place-items: end center;
-  filter: drop-shadow(0 1px 0 #000) drop-shadow(0 0 2px rgba(0,0,0,.8));
-}
-
-.player-sprite {
-  width: 88%;
-  height: 88%;
-  object-fit: contain;
-  image-rendering: pixelated;
+  border: 2px solid #000;
+  position: relative;
 }
 
 .player::after {
   content: attr(data-name);
   position: absolute;
   top: -18px;
-  left: -10px;
+  left: -8px;
   font-size: 10px;
   background: #000;
   color: #fff;
   padding: 1px 3px;
   white-space: nowrap;
-  border: 1px solid #fff;
 }

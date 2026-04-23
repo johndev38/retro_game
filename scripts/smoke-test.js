@@ -30,16 +30,6 @@ async function run() {
       body: JSON.stringify({ name: 'Smoke', room: 'TEST' })
     });
 
-
-    const cssResponse = await fetch('http://localhost:3000/styles.css');
-    if (!cssResponse.ok) {
-      throw new Error(`Styles indisponibles (HTTP ${cssResponse.status})`);
-    }
-
-    const svgResponse = await fetch('http://localhost:3000/assets/chars/mage.svg');
-    if (!svgResponse.ok) {
-      throw new Error(`Sprite SVG indisponible (HTTP ${svgResponse.status})`);
-    }
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
     }
