@@ -10,6 +10,7 @@ const roomCodeInput = document.getElementById('roomCode');
 const joinBtn = document.getElementById('joinBtn');
 const chatInput = document.getElementById('chatInput');
 const chatBtn = document.getElementById('chatBtn');
+const notesBoard = document.getElementById('notesBoard');
 
 let map = [];
 let roles = {};
@@ -117,14 +118,6 @@ function drawPlayers() {
     sprite.alt = p.role || 'unknown';
     sprite.src = charSpriteByRole[roleId] || charSpriteByRole.mage;
     avatar.appendChild(sprite);
-
-    if (p.chat && Date.now() - (p.chatAt || 0) < 9000) {
-      const bubble = document.createElement('div');
-      bubble.className = 'chat-bubble';
-      bubble.textContent = p.chat;
-      avatar.appendChild(bubble);
-    }
-
     tile.appendChild(avatar);
 
     if (p.id === me) {
@@ -132,6 +125,32 @@ function drawPlayers() {
       zoneName.textContent = zoneIdeas[currentZone].title;
       zoneIdea.textContent = zoneIdeas[currentZone].text;
     }
+  });
+}
+
+
+function renderNotes() {
+  const allNotes = players.flatMap((p) => {
+    const notes = Array.isArray(p.notes) ? p.notes : [];
+    return notes.map((note) => ({ ...note, author: p.name, playerId: p.id }));
+  }).sort((a, b) => b.at - a.at);
+
+  notesBoard.innerHTML = '';
+  allNotes.forEach((note) => {
+    const item = document.createElement('article');
+    item.className = 'postit';
+
+    const author = document.createElement('strong');
+    author.className = 'postit-author';
+    author.textContent = note.author;
+
+    const text = document.createElement('p');
+    text.className = 'postit-text';
+    text.textContent = note.text;
+
+    item.appendChild(author);
+    item.appendChild(text);
+    notesBoard.appendChild(item);
   });
 }
 
@@ -146,6 +165,7 @@ function syncState(nextPlayers) {
 
   drawRoles();
   drawPlayers();
+  renderNotes();
 }
 
 function connectEvents() {

@@ -198,8 +198,7 @@ const server = http.createServer(async (req, res) => {
         color: '#ffffff',
         x: spawn.x,
         y: spawn.y,
-        chat: '',
-        chatAt: 0
+        notes: []
       });
 
       sendJson(res, 200, {
@@ -293,15 +292,21 @@ const server = http.createServer(async (req, res) => {
         return;
       }
 
-      const text = (body.text || '').toString().trim().slice(0, 120);
+      const text = (body.text || '').toString().trim().slice(0, 160);
       if (!text) {
         sendJson(res, 400, { error: 'Message vide' });
         return;
       }
 
-      player.chat = text;
-      player.chatAt = Date.now();
-      sendJson(res, 200, { ok: true });
+      const note = {
+        id: randomUUID(),
+        text,
+        at: Date.now()
+      };
+      player.notes = Array.isArray(player.notes) ? player.notes : [];
+      player.notes.push(note);
+
+      sendJson(res, 200, { ok: true, note });
       broadcastRoom(player.room);
     } catch (error) {
       sendJson(res, 400, { error: error.message });
