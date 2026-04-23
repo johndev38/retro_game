@@ -10,26 +10,47 @@ const MAP_HEIGHT = 16;
 
 const roles = {
   mage: {
-    name: 'Mage',
+    name: 'Mage Architecte',
     power: 'Résolution des problèmes complexes et des blocages de conception.',
     color: '#7c5cff'
   },
   nain: {
-    name: 'Nain',
+    name: 'Nain Débuggeur',
     power: 'Résolution des bugs critiques et stabilisation du sprint.',
     color: '#cc7a33'
   },
   rôdeur: {
-    name: 'Rôdeur',
+    name: 'Rôdeur Risques',
     power: 'Détection des risques cachés et sécurisation des dépendances.',
     color: '#3bb273'
   },
   barde: {
-    name: 'Barde',
+    name: 'Barde Communication',
     power: 'Fluidification de la communication d’équipe et médiation.',
     color: '#e05ea1'
+  },
+  qa: {
+    name: 'Alchimiste QA',
+    power: 'Transforme les hypothèses en critères de test clairs et fiables.',
+    color: '#4fa3d9'
+  },
+  scrum_master: {
+    name: 'Gardien Scrum',
+    power: 'Élimine les impediments et protège le flux de travail de l’équipe.',
+    color: '#ffd166'
+  },
+  devops: {
+    name: 'Forgeron DevOps',
+    power: 'Automatise la livraison et surveille la stabilité en continu.',
+    color: '#8ec07c'
+  },
+  ux: {
+    name: 'Oracle UX',
+    power: 'Donne la voix de l’utilisateur via feedbacks et prototypes rapides.',
+    color: '#f78c6b'
   }
 };
+
 
 const zoneIdeas = {
   plains: {
