@@ -5,6 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js && node --check public/script.js"
+
+    "check": "node --check server.js && node --check public/script.js",
+    "smoke": "node scripts/smoke-test.js"
   }
 }
