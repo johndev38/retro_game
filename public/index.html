@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Retro Agile Quest</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <section class="panel left">
+        <h1>Retro Agile Quest</h1>
+        <p class="subtitle">Version multijoueur rétro style Pokémon pour animer vos rétros agiles.</p>
+
+        <div class="lobby">
+          <h2>Lobby</h2>
+          <label for="playerName">Nom</label>
+          <input id="playerName" maxlength="20" placeholder="Ex: Alice" />
+
+          <label for="roomCode">Code de salle</label>
+          <input id="roomCode" maxlength="12" value="RETRO" />
+          <button id="joinBtn" class="primary">Rejoindre la partie</button>
+          <p id="roomInfo" class="description">Pas encore connecté.</p>
+        </div>
+
+        <h2>Choix du personnage</h2>
+        <div id="roles" class="roles"></div>
+        <p id="roleDescription" class="description">Choisis un rôle après avoir rejoint une salle.</p>
+
+
+        <h2>Post-its d'équipe</h2>
+        <div class="chat-controls">
+          <input id="chatInput" maxlength="160" placeholder="Ajoute un post-it rétro..." />
+          <button id="chatBtn">Ajouter</button>
+        </div>
+
+        <h2>Zone actuelle</h2>
+        <p id="zoneName">-</p>
+        <p id="zoneIdea" class="description">-</p>
+      </section>
+
+      <section class="panel right">
+        <div class="play-area">
+          <div id="game" class="game"></div>
+          <aside class="notes-panel">
+            <h2>Mur de post-its</h2>
+            <div id="notesBoard" class="notes-board"></div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
