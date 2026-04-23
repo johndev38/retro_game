@@ -8,5 +8,6 @@
     "check": "node --check server.js && node --check public/script.js",
     "smoke": "node scripts/smoke-test.js",
     "demo": "node scripts/demo.js"
+
   }
 }
