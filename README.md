@@ -12,6 +12,15 @@ Puis ouvrir http://localhost:3000.
 
 ## Vérifications
 
+
+### Lancer une démo (ouvre le navigateur automatiquement)
+
+```bash
+npm run demo
+```
+
+Sur Windows PowerShell, cette commande fonctionne aussi.
+
 ### Vérification syntaxe
 
 ```bash
