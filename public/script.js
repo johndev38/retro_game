@@ -18,8 +18,6 @@ let room = null;
 let selectedRole = null;
 let events = null;
 
-const normalizeRole = (role) => (role || 'none').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-
 async function api(path, payload) {
   const response = await fetch(path, {
     method: 'POST',
@@ -68,7 +66,6 @@ function drawRoles() {
 }
 
 function drawPlayers() {
-  if (!map.length || !map[0]?.length) return;
   document.querySelectorAll('.player').forEach((node) => node.remove());
 
   players.forEach((p) => {
@@ -77,7 +74,8 @@ function drawPlayers() {
     if (!tile) return;
 
     const avatar = document.createElement('div');
-    avatar.className = `player role-${normalizeRole(p.role)}`;
+    avatar.className = 'player';
+    avatar.style.background = p.color;
     avatar.dataset.name = p.name;
 
     tile.appendChild(avatar);
@@ -125,8 +123,10 @@ joinBtn.addEventListener('click', async () => {
     map = data.map;
     roles = data.roles;
     zoneIdeas = data.zoneIdeas;
-    drawMap();
     syncState(data.players);
+    drawMap();
+    drawRoles();
+    drawPlayers();
     connectEvents();
 
     roomInfo.textContent = `Connecté à la salle: ${room}`;

@@ -12,6 +12,7 @@ Puis ouvrir http://localhost:3000.
 
 ## Vérifications
 
+
 ### Lancer une démo (ouvre le navigateur automatiquement)
 
 ```bash
