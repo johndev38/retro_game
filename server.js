@@ -48,6 +48,11 @@ const roles = {
     name: 'Oracle UX',
     power: 'Donne la voix de l’utilisateur via feedbacks et prototypes rapides.',
     color: '#f78c6b'
+  },
+  mouche: {
+    name: 'Mouche',
+    power: 'Rôle Alex Colé: capte les signaux faibles et recolle les points d\'attention.',
+    color: '#9aa1b2'
   }
 };
 
@@ -301,12 +306,65 @@ const server = http.createServer(async (req, res) => {
       const note = {
         id: randomUUID(),
         text,
-        at: Date.now()
+        at: Date.now(),
+        plusOne: 0,
+        likedBy: []
       };
       player.notes = Array.isArray(player.notes) ? player.notes : [];
       player.notes.push(note);
 
       sendJson(res, 200, { ok: true, note });
+      broadcastRoom(player.room);
+    } catch (error) {
+      sendJson(res, 400, { error: error.message });
+    }
+    return;
+  }
+
+
+  if (req.url.startsWith('/api/note-plusone') && req.method === 'POST') {
+    try {
+      const body = await parseJsonBody(req);
+      const player = players.get(body.playerId);
+      if (!player) {
+        sendJson(res, 404, { error: 'Joueur inconnu' });
+        return;
+      }
+
+      const roomPlayers = playersOfRoom(player.room);
+      let targetNote = null;
+      let ownerId = null;
+      for (const p of roomPlayers) {
+        const note = (p.notes || []).find((n) => n.id === body.noteId);
+        if (note) {
+          targetNote = note;
+          ownerId = p.id;
+          break;
+        }
+      }
+
+      if (!targetNote || !ownerId) {
+        sendJson(res, 404, { error: 'Post-it introuvable' });
+        return;
+      }
+
+      const owner = players.get(ownerId);
+      const ownerNote = owner?.notes?.find((n) => n.id === body.noteId);
+      if (!ownerNote) {
+        sendJson(res, 404, { error: 'Post-it introuvable' });
+        return;
+      }
+
+      ownerNote.likedBy = Array.isArray(ownerNote.likedBy) ? ownerNote.likedBy : [];
+      if (ownerNote.likedBy.includes(player.room + ':' + body.playerId)) {
+        sendJson(res, 200, { ok: true, plusOne: ownerNote.plusOne || 0, alreadyLiked: true });
+        return;
+      }
+
+      ownerNote.likedBy.push(player.room + ':' + body.playerId);
+      ownerNote.plusOne = (ownerNote.plusOne || 0) + 1;
+
+      sendJson(res, 200, { ok: true, plusOne: ownerNote.plusOne });
       broadcastRoom(player.room);
     } catch (error) {
       sendJson(res, 400, { error: error.message });

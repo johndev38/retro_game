@@ -59,6 +59,17 @@ async function run() {
       throw new Error(`Chat indisponible (HTTP ${chatResponse.status})`);
     }
 
+    const chatData = await chatResponse.json();
+    const plusResponse = await fetch('http://localhost:3000/api/note-plusone', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ playerId: data.playerId, noteId: chatData.note.id })
+    });
+
+    if (!plusResponse.ok) {
+      throw new Error(`+1 indisponible (HTTP ${plusResponse.status})`);
+    }
+
     console.log('Smoke test OK:', { playerId: data.playerId, room: data.room });
   } finally {
     server.kill('SIGTERM');
