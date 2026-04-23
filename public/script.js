@@ -8,6 +8,8 @@ const roomInfo = document.getElementById('roomInfo');
 const playerNameInput = document.getElementById('playerName');
 const roomCodeInput = document.getElementById('roomCode');
 const joinBtn = document.getElementById('joinBtn');
+const chatInput = document.getElementById('chatInput');
+const chatBtn = document.getElementById('chatBtn');
 
 let map = [];
 let roles = {};
@@ -116,6 +118,13 @@ function drawPlayers() {
     sprite.src = charSpriteByRole[roleId] || charSpriteByRole.mage;
     avatar.appendChild(sprite);
 
+    if (p.chat && Date.now() - (p.chatAt || 0) < 9000) {
+      const bubble = document.createElement('div');
+      bubble.className = 'chat-bubble';
+      bubble.textContent = p.chat;
+      avatar.appendChild(bubble);
+    }
+
     tile.appendChild(avatar);
 
     if (p.id === me) {
@@ -148,6 +157,28 @@ function connectEvents() {
     syncState(data.players);
   });
 }
+
+
+async function sendChat() {
+  if (!me) return;
+  const text = chatInput.value.trim();
+  if (!text) return;
+
+  try {
+    await api('/api/chat', { playerId: me, text });
+    chatInput.value = '';
+  } catch (error) {
+    roomInfo.textContent = `Erreur chat: ${error.message}`;
+  }
+}
+
+chatBtn.addEventListener('click', sendChat);
+chatInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    sendChat();
+  }
+});
 
 joinBtn.addEventListener('click', async () => {
   try {

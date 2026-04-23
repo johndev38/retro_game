@@ -197,7 +197,9 @@ const server = http.createServer(async (req, res) => {
         role: null,
         color: '#ffffff',
         x: spawn.x,
-        y: spawn.y
+        y: spawn.y,
+        chat: '',
+        chatAt: 0
       });
 
       sendJson(res, 200, {
@@ -273,6 +275,32 @@ const server = http.createServer(async (req, res) => {
 
       player.x = clamp(player.x + (body.dx || 0), 0, MAP_WIDTH - 1);
       player.y = clamp(player.y + (body.dy || 0), 0, MAP_HEIGHT - 1);
+      sendJson(res, 200, { ok: true });
+      broadcastRoom(player.room);
+    } catch (error) {
+      sendJson(res, 400, { error: error.message });
+    }
+    return;
+  }
+
+
+  if (req.url.startsWith('/api/chat') && req.method === 'POST') {
+    try {
+      const body = await parseJsonBody(req);
+      const player = players.get(body.playerId);
+      if (!player) {
+        sendJson(res, 404, { error: 'Joueur inconnu' });
+        return;
+      }
+
+      const text = (body.text || '').toString().trim().slice(0, 120);
+      if (!text) {
+        sendJson(res, 400, { error: 'Message vide' });
+        return;
+      }
+
+      player.chat = text;
+      player.chatAt = Date.now();
       sendJson(res, 200, { ok: true });
       broadcastRoom(player.room);
     } catch (error) {

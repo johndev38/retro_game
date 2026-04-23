@@ -57,6 +57,19 @@ button:hover { filter: brightness(1.08); }
 
 .roles { display: grid; gap: 8px; }
 
+.chat-controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.chat-controls button {
+  width: auto;
+  padding: 8px 12px;
+}
+
+
 .role-btn {
   text-align: left;
   border: 2px solid #fff;
@@ -118,6 +131,35 @@ button:hover { filter: brightness(1.08); }
   object-fit: contain;
   image-rendering: pixelated;
 }
+
+
+.chat-bubble {
+  position: absolute;
+  bottom: 88%;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 140px;
+  font-size: 10px;
+  line-height: 1.2;
+  color: #111;
+  background: #fff4c6;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 3px 5px;
+  text-align: center;
+  z-index: 4;
+}
+
+.chat-bubble::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #fff4c6;
+}
+
 
 .player::after {
   content: attr(data-name);

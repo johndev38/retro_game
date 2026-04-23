@@ -49,6 +49,16 @@ async function run() {
       throw new Error('Réponse join invalide');
     }
 
+    const chatResponse = await fetch('http://localhost:3000/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ playerId: data.playerId, text: 'hello retro' })
+    });
+
+    if (!chatResponse.ok) {
+      throw new Error(`Chat indisponible (HTTP ${chatResponse.status})`);
+    }
+
     console.log('Smoke test OK:', { playerId: data.playerId, room: data.room });
   } finally {
     server.kill('SIGTERM');
