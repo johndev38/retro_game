@@ -57,6 +57,40 @@ const roles = {
 };
 
 
+
+const items = {
+  epee_focus: {
+    name: 'Épée du Focus',
+    power: 'Permet de se concentrer sur la tâche actuelle sans se disperser.',
+    icon: '🗡️'
+  },
+  potion_energie: {
+    name: 'Potion d\'Énergie',
+    power: 'Donne un boost pour terminer un ticket complexe avant la fin du sprint.',
+    icon: '🧪'
+  },
+  bouclier_qualite: {
+    name: 'Bouclier Qualité',
+    power: 'Réduit les régressions grâce à plus de tests et de revues.',
+    icon: '🛡️'
+  },
+  grimoire_refacto: {
+    name: 'Grimoire de Refacto',
+    power: 'Aide à transformer la dette technique en code plus simple.',
+    icon: '📘'
+  },
+  boussole_priorite: {
+    name: 'Boussole de Priorité',
+    power: 'Guide l\'équipe vers la story la plus utile au client.',
+    icon: '🧭'
+  },
+  totem_collab: {
+    name: 'Totem de Collaboration',
+    power: 'Accélère l\'entraide et les sessions de pair/mob programming.',
+    icon: '🤝'
+  }
+};
+
 const zoneIdeas = {
   plains: {
     title: 'Plaine du Sprint Calme',
@@ -203,7 +237,8 @@ const server = http.createServer(async (req, res) => {
         color: '#ffffff',
         x: spawn.x,
         y: spawn.y,
-        notes: []
+        notes: [],
+        items: []
       });
 
       sendJson(res, 200, {
@@ -212,6 +247,7 @@ const server = http.createServer(async (req, res) => {
         roles,
         map,
         zoneIdeas,
+        items,
         players: playersOfRoom(roomCode)
       });
 
@@ -261,6 +297,32 @@ const server = http.createServer(async (req, res) => {
       player.color = role.color;
 
       sendJson(res, 200, { ok: true });
+      broadcastRoom(player.room);
+    } catch (error) {
+      sendJson(res, 400, { error: error.message });
+    }
+    return;
+  }
+
+
+  if (req.url.startsWith('/api/select-items') && req.method === 'POST') {
+    try {
+      const body = await parseJsonBody(req);
+      const player = players.get(body.playerId);
+      if (!player) {
+        sendJson(res, 404, { error: 'Joueur inconnu' });
+        return;
+      }
+
+      const selected = Array.isArray(body.items) ? body.items : [];
+      const unique = [...new Set(selected)].filter((id) => id in items);
+      if (unique.length > 3) {
+        sendJson(res, 400, { error: 'Tu peux choisir au maximum 3 objets.' });
+        return;
+      }
+
+      player.items = unique;
+      sendJson(res, 200, { ok: true, items: unique });
       broadcastRoom(player.room);
     } catch (error) {
       sendJson(res, 400, { error: error.message });

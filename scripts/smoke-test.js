@@ -49,6 +49,20 @@ async function run() {
       throw new Error('Réponse join invalide');
     }
 
+
+    const itemsResponse = await fetch('http://localhost:3000/api/select-items', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        playerId: data.playerId,
+        items: ['epee_focus', 'potion_energie', 'bouclier_qualite']
+      })
+    });
+
+    if (!itemsResponse.ok) {
+      throw new Error(`Sélection objets indisponible (HTTP ${itemsResponse.status})`);
+    }
+
     const chatResponse = await fetch('http://localhost:3000/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

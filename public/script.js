@@ -11,9 +11,12 @@ const joinBtn = document.getElementById('joinBtn');
 const chatInput = document.getElementById('chatInput');
 const chatBtn = document.getElementById('chatBtn');
 const notesBoard = document.getElementById('notesBoard');
+const itemsList = document.getElementById('itemsList');
+const itemsSummary = document.getElementById('itemsSummary');
 
 let map = [];
 let roles = {};
+let itemsCatalog = {};
 let zoneIdeas = {};
 let players = [];
 let me = null;
@@ -118,6 +121,52 @@ function drawPlayers() {
 }
 
 
+
+function renderItems() {
+  itemsList.innerHTML = '';
+
+  const myState = players.find((p) => p.id === me);
+  const selectedItems = new Set(myState?.items || []);
+
+  Object.entries(itemsCatalog).forEach(([id, item]) => {
+    const label = document.createElement('label');
+    label.className = 'item-card';
+
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.checked = selectedItems.has(id);
+    input.addEventListener('change', async () => {
+      const next = new Set(selectedItems);
+      if (input.checked) next.add(id);
+      else next.delete(id);
+
+      if (next.size > 3) {
+        input.checked = false;
+        roomInfo.textContent = 'Tu peux choisir 3 objets maximum.';
+        return;
+      }
+
+      try {
+        await api('/api/select-items', { playerId: me, items: [...next] });
+      } catch (error) {
+        roomInfo.textContent = `Erreur objets: ${error.message}`;
+      }
+    });
+
+    const text = document.createElement('div');
+    text.innerHTML = `<strong>${item.icon} ${item.name}</strong><small>${item.power}</small>`;
+
+    label.appendChild(input);
+    label.appendChild(text);
+    itemsList.appendChild(label);
+  });
+
+  const selectedPowers = [...selectedItems].map((id) => itemsCatalog[id]?.name).filter(Boolean);
+  itemsSummary.textContent = selectedPowers.length
+    ? `Objets actifs: ${selectedPowers.join(', ')}`
+    : 'Aucun objet sélectionné.';
+}
+
 function renderNotes() {
   const allNotes = players.flatMap((p) => {
     const notes = Array.isArray(p.notes) ? p.notes : [];
@@ -166,6 +215,7 @@ function syncState(nextPlayers) {
 
   drawRoles();
   drawPlayers();
+  renderItems();
   renderNotes();
 }
 
@@ -231,6 +281,7 @@ joinBtn.addEventListener('click', async () => {
     room = data.room;
     map = data.map;
     roles = data.roles;
+    itemsCatalog = data.items || {};
     zoneIdeas = data.zoneIdeas;
     drawMap();
     syncState(data.players);

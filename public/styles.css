@@ -57,6 +57,30 @@ button:hover { filter: brightness(1.08); }
 
 .roles { display: grid; gap: 8px; }
 
+
+.items-list {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.item-card {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 8px;
+  align-items: start;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 6px;
+}
+
+.item-card small {
+  display: block;
+  color: #c3caff;
+  margin-top: 2px;
+}
+
+
 .chat-controls {
   display: grid;
   grid-template-columns: 1fr auto;
