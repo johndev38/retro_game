@@ -11,50 +11,86 @@ const MAP_HEIGHT = 16;
 const roles = {
   mage: {
     name: 'Mage Architecte',
-    power: 'Résolution des problèmes complexes et des blocages de conception.',
+    power: 'Ce sprint, il a clarifié les choix techniques, dessiné les solutions et aidé l’équipe à ne pas se perdre dans la complexité.',
     color: '#7c5cff'
   },
   nain: {
     name: 'Nain Débuggeur',
-    power: 'Résolution des bugs critiques et stabilisation du sprint.',
+    power: 'Ce sprint, il a creusé dans les bugs, fouillé les logs, trouvé les causes racines et consolidé ce qui menaçait de s’effondrer.',
     color: '#cc7a33'
   },
-  rôdeur: {
-    name: 'Rôdeur Risques',
-    power: 'Détection des risques cachés et sécurisation des dépendances.',
+  rodeur: {
+    name: 'Rôdeur des Risques',
+    power: 'Ce sprint, il a repéré les pièges cachés : dépendances fragiles, zones floues, retards possibles et décisions dangereuses.',
     color: '#3bb273'
   },
   barde: {
     name: 'Barde Communication',
-    power: 'Fluidification de la communication d’équipe et médiation.',
+    power: 'Ce sprint, il a fait circuler l’information, reformulé les malentendus et aidé l’équipe à mieux se comprendre.',
     color: '#e05ea1'
   },
   qa: {
     name: 'Alchimiste QA',
-    power: 'Transforme les hypothèses en critères de test clairs et fiables.',
+    power: 'Ce sprint, il a transformé les doutes en tests, les hypothèses en critères clairs et les régressions en apprentissages.',
     color: '#4fa3d9'
   },
   scrum_master: {
-    name: 'Gardien Scrum',
-    power: 'Élimine les impediments et protège le flux de travail de l’équipe.',
+    name: 'Gardien du Flux',
+    power: 'Ce sprint, il a protégé l’équipe des interruptions, levé les blocages et aidé chacun à avancer sans se disperser.',
     color: '#ffd166'
   },
   devops: {
     name: 'Forgeron DevOps',
-    power: 'Automatise la livraison et surveille la stabilité en continu.',
+    power: 'Ce sprint, il a renforcé les pipelines, surveillé les environnements, automatisé les livraisons et réparé les chaînes cassées.',
     color: '#8ec07c'
   },
   ux: {
     name: 'Oracle UX',
-    power: 'Donne la voix de l’utilisateur via feedbacks et prototypes rapides.',
+    power: 'Ce sprint, il a ramené la voix de l’utilisateur, questionné l’expérience réelle et aidé à rendre le produit plus utile.',
     color: '#f78c6b'
   },
+  po: {
+    name: 'Cartographe Produit',
+    power: 'Ce sprint, il a aidé à retrouver la bonne direction : priorités, valeur métier, stories utiles et décisions produit.',
+    color: '#5cc8ff'
+  },
+  techlead: {
+    name: 'Chevalier Tech Lead',
+    power: 'Ce sprint, il a défendu la cohérence du code, accompagné les décisions techniques et aidé l’équipe à progresser.',
+    color: '#b392f0'
+  },
+  dette: {
+    name: 'Spectre de la Dette Technique',
+    power: 'Ce sprint, il a hanté le code oublié, révélé les raccourcis coûteux et rappelé ce qui ralentit l’équipe.',
+    color: '#6c757d'
+  },
+  livreur: {
+    name: 'Messager de Livraison',
+    power: 'Ce sprint, il a porté les features jusqu’aux utilisateurs, suivi les mises en production et observé les retours du terrain.',
+    color: '#ff9f1c'
+  },
+  explorateur: {
+    name: 'Explorateur de Spike',
+    power: 'Ce sprint, il a testé des pistes incertaines, prototypé rapidement et rapporté des réponses avant d’engager toute l’équipe.',
+    color: '#00b4d8'
+  },
+  nettoyeur: {
+    name: 'Moine Refacto',
+    power: 'Ce sprint, il a simplifié le code, supprimé les doublons, clarifié les noms et rendu le système plus lisible.',
+    color: '#90be6d'
+  },
+  pompier: {
+    name: 'Pompier de Production',
+    power: 'Ce sprint, il a éteint les incidents, analysé les alertes urgentes et aidé l’équipe à retrouver un état stable.',
+    color: '#ef476f'
+  },
   mouche: {
-    name: 'Mouche',
-    power: 'Rôle Alex Colé: capte les signaux faibles et recolle les points d\'attention.',
+    name: 'Mouche des Signaux Faibles',
+    power: 'Ce sprint, elle a capté les petits détails, les irritants, les non-dits et les alertes discrètes que personne ne voyait vraiment.',
     color: '#9aa1b2'
   }
 };
+
 
 
 
@@ -93,31 +129,48 @@ const items = {
 
 const zoneIdeas = {
   plains: {
-    title: 'Plaine du Sprint Calme',
-    text: 'Idée: réduire la dette légère et préparer les stories du sprint suivant.'
+    title: 'Prairie du Sprint Stable',
+    text: 'Zone calme: on avance au rythme prévu, peu d\'interruptions, bonne visibilité sur les priorités.'
   },
   volcano: {
-    title: 'Zone Volcanique des Incidents',
-    text: 'Idée: lancer un swarm de 30 min puis rédiger un mini post-mortem sans blâme.'
+    title: 'Volcan de la Pression',
+    text: 'Ici, la pression a monté: urgences, délais courts et décisions rapides. Idée rétro: identifier ce qui a créé la surchauffe.'
   },
   forest: {
     title: 'Forêt des Explorations',
-    text: 'Idée: planifier un spike timeboxé pour tester un choix technique risqué.'
+    text: 'Zone d\'expérimentation: spikes, pistes techniques, incertitudes à clarifier avant de s\'engager.'
   },
   lake: {
     title: 'Lac des Feedbacks',
-    text: 'Idée: organiser une rétro flash orientée voix du client et apprentissages.'
+    text: 'Moment de recul: retours utilisateurs, qualité perçue, ajustements utiles pour le prochain sprint.'
+  },
+  island: {
+    title: 'Île du Calme',
+    text: 'Petit havre: focus, concentration et entraide. Idée rétro: ce qui nous a aidés à préserver ce calme.'
+  },
+  ruins: {
+    title: 'Ruines de la Dette',
+    text: 'Anciennes décisions qui pèsent encore. Idée rétro: choisir 1 dette à traiter en priorité et son bénéfice attendu.'
+  },
+  city: {
+    title: 'Ville des Livraisons',
+    text: 'Zone de livraison continue: release, monitoring, retours terrain. Idée rétro: fluidifier le passage vers la prod.'
   }
 };
 
+
 const map = Array.from({ length: MAP_HEIGHT }, (_, y) =>
   Array.from({ length: MAP_WIDTH }, (_, x) => {
-    if (x > 14 && y < 6) return 'volcano';
-    if (x < 7 && y > 8) return 'forest';
-    if (x > 15 && y > 10) return 'lake';
+    if (x > 16 && y < 5) return 'volcano';
+    if (x < 7 && y > 9) return 'forest';
+    if (x > 16 && y > 11) return 'lake';
+    if (x >= 9 && x <= 13 && y >= 6 && y <= 9) return 'island';
+    if (x >= 2 && x <= 6 && y >= 3 && y <= 6) return 'ruins';
+    if (x >= 12 && x <= 18 && y >= 7 && y <= 10) return 'city';
     return 'plains';
   })
 );
+
 
 const rooms = new Map();
 const players = new Map();
