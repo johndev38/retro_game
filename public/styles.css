@@ -268,3 +268,19 @@ button:hover { filter: brightness(1.08); }
   margin-top: 3px;
   text-align: center;
 }
+
+
+.map-column {
+  display: grid;
+  gap: 10px;
+}
+
+.zone-panel {
+  border: 3px solid var(--accent);
+  background: rgba(6, 12, 28, 0.82);
+  padding: 8px 10px;
+}
+
+.zone-panel h2 {
+  margin-top: 0;
+}
