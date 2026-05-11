@@ -1,6 +1,7 @@
 const game = document.getElementById('game');
 const roleSelect = document.getElementById('roleSelect');
 const roleDescription = document.getElementById('roleDescription');
+const rolePreview = document.getElementById('rolePreview');
 const zoneName = document.getElementById('zoneName');
 const zoneIdea = document.getElementById('zoneIdea');
 const roomInfo = document.getElementById('roomInfo');
@@ -88,6 +89,44 @@ function drawRoles() {
     option.textContent = role.name;
     if (selectedRole === id) option.selected = true;
     roleSelect.appendChild(option);
+  });
+
+  previewRoleDescription(selectedRole || roleSelect.value);
+  drawRolePreview();
+}
+
+
+function drawRolePreview() {
+  rolePreview.innerHTML = '';
+
+  Object.entries(roles).forEach(([id, role]) => {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'role-card';
+    if (selectedRole === id) card.classList.add('selected');
+
+    const sprite = document.createElement('img');
+    sprite.alt = role.name;
+    sprite.src = charSpriteByRole[normalizeRole(id)] || charSpriteByRole.mage;
+
+    const name = document.createElement('span');
+    name.className = 'role-card-name';
+    name.textContent = role.name;
+
+    const preview = () => previewRoleDescription(id);
+    const resetPreview = () => previewRoleDescription(selectedRole || roleSelect.value);
+    card.addEventListener('mouseenter', preview);
+    card.addEventListener('focus', preview);
+    card.addEventListener('mouseleave', resetPreview);
+    card.addEventListener('blur', resetPreview);
+    card.addEventListener('click', () => {
+      roleSelect.value = id;
+      roleSelect.dispatchEvent(new Event('change'));
+    });
+
+    card.appendChild(sprite);
+    card.appendChild(name);
+    rolePreview.appendChild(card);
   });
 }
 
@@ -244,10 +283,23 @@ async function sendChat() {
 }
 
 
+function previewRoleDescription(roleId) {
+  if (!roleId || !roles[roleId]) {
+    roleDescription.textContent = 'Choisis un rôle pour découvrir son pouvoir.';
+    return;
+  }
+
+  roleDescription.textContent = roles[roleId].power;
+}
+
+roleSelect.addEventListener('input', () => {
+  previewRoleDescription(roleSelect.value);
+});
+
 roleSelect.addEventListener('change', async () => {
-  if (!me) return;
   const role = roleSelect.value;
-  if (!role) return;
+  previewRoleDescription(role);
+  if (!me || !role) return;
 
   try {
     await api('/api/select-role', {
@@ -256,7 +308,6 @@ roleSelect.addEventListener('change', async () => {
       name: playerNameInput.value
     });
     selectedRole = role;
-    roleDescription.textContent = roles[role].power;
   } catch (error) {
     roomInfo.textContent = `Erreur rôle: ${error.message}`;
   }
