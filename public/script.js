@@ -89,6 +89,8 @@ function drawRoles() {
     if (selectedRole === id) option.selected = true;
     roleSelect.appendChild(option);
   });
+
+  previewRoleDescription(selectedRole || roleSelect.value);
 }
 
 function drawPlayers() {
@@ -244,10 +246,23 @@ async function sendChat() {
 }
 
 
+function previewRoleDescription(roleId) {
+  if (!roleId || !roles[roleId]) {
+    roleDescription.textContent = 'Choisis un rôle pour découvrir son pouvoir.';
+    return;
+  }
+
+  roleDescription.textContent = roles[roleId].power;
+}
+
+roleSelect.addEventListener('input', () => {
+  previewRoleDescription(roleSelect.value);
+});
+
 roleSelect.addEventListener('change', async () => {
-  if (!me) return;
   const role = roleSelect.value;
-  if (!role) return;
+  previewRoleDescription(role);
+  if (!me || !role) return;
 
   try {
     await api('/api/select-role', {
@@ -256,7 +271,6 @@ roleSelect.addEventListener('change', async () => {
       name: playerNameInput.value
     });
     selectedRole = role;
-    roleDescription.textContent = roles[role].power;
   } catch (error) {
     roomInfo.textContent = `Erreur rôle: ${error.message}`;
   }
