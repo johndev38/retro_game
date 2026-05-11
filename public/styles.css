@@ -120,7 +120,7 @@ button:hover { filter: brightness(1.08); }
   grid-template-columns: repeat(24, 1fr);
   grid-template-rows: repeat(16, 1fr);
   image-rendering: pixelated;
-  background: #000;
+  background: #1b3f6a;
   box-shadow: 0 0 0 6px #0c0f24, 0 12px 30px rgba(0, 0, 0, 0.35);
 }
 
@@ -177,7 +177,7 @@ button:hover { filter: brightness(1.08); }
 
 
 .tile {
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: none;
   position: relative;
   overflow: hidden;
 }
@@ -216,7 +216,7 @@ button:hover { filter: brightness(1.08); }
   top: -18px;
   left: -10px;
   font-size: 10px;
-  background: #000;
+  background: #1b3f6a;
   color: #fff;
   padding: 1px 3px;
   white-space: nowrap;

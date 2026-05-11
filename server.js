@@ -161,15 +161,26 @@ const zoneIdeas = {
 
 const map = Array.from({ length: MAP_HEIGHT }, (_, y) =>
   Array.from({ length: MAP_WIDTH }, (_, x) => {
-    if (x > 16 && y < 5) return 'volcano';
-    if (x < 7 && y > 9) return 'forest';
-    if (x > 16 && y > 11) return 'lake';
-    if (x >= 9 && x <= 13 && y >= 6 && y <= 9) return 'island';
-    if (x >= 2 && x <= 6 && y >= 3 && y <= 6) return 'ruins';
-    if (x >= 12 && x <= 18 && y >= 7 && y <= 10) return 'city';
+    const coast = Math.min(x, y, MAP_WIDTH - 1 - x, MAP_HEIGHT - 1 - y);
+    if (coast < 1) return 'lake';
+
+    const dVolcano = Math.hypot(x - 19, y - 3);
+    if (dVolcano < 3.8) return 'volcano';
+
+    const dIsland = Math.hypot(x - 11, y - 8);
+    if (dIsland < 2.3) return 'island';
+
+    const dRuins = Math.hypot(x - 4, y - 5);
+    if (dRuins < 2.7) return 'ruins';
+
+    if (x >= 13 && x <= 20 && y >= 8 && y <= 12) return 'city';
+
+    if (x < 8 && y > 8) return 'forest';
+
     return 'plains';
   })
 );
+
 
 
 const rooms = new Map();
