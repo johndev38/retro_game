@@ -27,30 +27,35 @@
         <select id="roleSelect">
           <option value="">Sélectionne un rôle...</option>
         </select>
-        <p id="roleDescription" class="description">Choisis un rôle après avoir rejoint une salle.</p>
+        <div id="rolePreview" class="role-preview" aria-live="polite"></div>
+        <p id="roleDescription" class="description">Survole un personnage pour voir sa description.</p>
 
 
 
+        <!--
         <h2>Objets (choisir 3 max)</h2>
         <div id="itemsList" class="items-list"></div>
         <p id="itemsSummary" class="description">Aucun objet sélectionné.</p>
+        -->
 
-        <h2>Post-its d'équipe</h2>
-        <div class="chat-controls">
-          <input id="chatInput" maxlength="160" placeholder="Ajoute un post-it rétro..." />
-          <button id="chatBtn">Ajouter</button>
-        </div>
-
-        <h2>Zone actuelle</h2>
-        <p id="zoneName">-</p>
-        <p id="zoneIdea" class="description">-</p>
       </section>
 
       <section class="panel right">
         <div class="play-area">
-          <div id="game" class="game"></div>
+          <div class="map-column">
+            <div id="game" class="game"></div>
+            <section class="zone-panel">
+              <h2>Zone actuelle</h2>
+              <p id="zoneName">-</p>
+              <p id="zoneIdea" class="description">-</p>
+            </section>
+          </div>
           <aside class="notes-panel">
             <h2>Mur de post-its</h2>
+            <div class="chat-controls">
+              <input id="chatInput" maxlength="160" placeholder="Ajoute un post-it rétro..." />
+              <button id="chatBtn">Ajouter</button>
+            </div>
             <div id="notesBoard" class="notes-board"></div>
           </aside>
         </div>
