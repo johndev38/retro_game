@@ -35,8 +35,118 @@ const tileSpriteByType = {
   forest: svgDataUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='#2f7a55'/><rect y='24' width='32' height='8' fill='#245d40'/><circle cx='8' cy='12' r='5' fill='#45a475'/><rect x='7' y='15' width='2' height='8' fill='#5a3b2f'/><circle cx='22' cy='11' r='6' fill='#4fb283'/><rect x='21' y='16' width='2' height='7' fill='#5a3b2f'/></svg>`),
   lake: svgDataUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='#2f79bf'/><path d='M0 11c4 2 8 2 12 0s8-2 12 0 8 2 8 0v4c-4 2-8 2-12 0s-8-2-12 0-8 2-8 0z' fill='#69c3ff' opacity='.55'/><path d='M0 21c4 2 8 2 12 0s8-2 12 0 8 2 8 0v4c-4 2-8 2-12 0s-8-2-12 0-8 2-8 0z' fill='#95dcff' opacity='.4'/></svg>`),
   island: svgDataUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='#2d76b8'/><circle cx='16' cy='16' r='9' fill='#f1db9a'/><circle cx='16' cy='16' r='6' fill='#79bf56'/><rect x='15' y='10' width='2' height='8' fill='#7b4a27'/><circle cx='17' cy='10' r='3' fill='#3f985e'/></svg>`),
-  ruins: svgDataUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='#69737a'/><rect y='24' width='32' height='8' fill='#50575c'/><rect x='6' y='12' width='4' height='8' fill='#8e989e'/><rect x='14' y='9' width='5' height='11' fill='#97a0a6'/><rect x='22' y='13' width='4' height='7' fill='#8a949a'/></svg>`),
-  city: svgDataUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='#3a4f78'/><rect y='24' width='32' height='8' fill='#2b3a58'/><rect x='4' y='12' width='6' height='12' fill='#6f88b5'/><rect x='12' y='9' width='7' height='15' fill='#7c96c5'/><rect x='21' y='14' width='7' height='10' fill='#6881ac'/><rect x='6' y='15' width='1' height='1' fill='#ffd76b'/><rect x='14' y='13' width='1' height='1' fill='#ffd76b'/><rect x='24' y='17' width='1' height='1' fill='#ffd76b'/></svg>`)
+  ruins: svgDataUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' shape-rendering='crispEdges'>
+  <rect width='32' height='32' fill='none'/>
+
+  <!-- SOL / HERBE ENVAHISSANTE -->
+  <rect x='0' y='26' width='32' height='6' fill='#3a5c2a'/>
+  <!-- Touffes d'herbe -->
+  <rect x='3' y='25' width='2' height='2' fill='#4a7a3a'/>
+  <rect x='9' y='25' width='1' height='2' fill='#4a7a3a'/>
+  <rect x='18' y='25' width='2' height='1' fill='#4a7a3a'/>
+  <rect x='25' y='25' width='2' height='2' fill='#4a7a3a'/>
+  <rect x='28' y='24' width='1' height='2' fill='#4a7a3a'/>
+
+  <!-- MUR GAUCHE (effondré, irrégulier) -->
+  <rect x='4' y='18' width='5' height='8' fill='#8a7a6a'/>
+  <rect x='4' y='15' width='3' height='4' fill='#8a7a6a'/>
+  <rect x='5' y='13' width='2' height='3' fill='#8a7a6a'/>
+  <!-- Crénelage cassé gauche -->
+  <rect x='4' y='12' width='1' height='2' fill='#8a7a6a'/>
+  <rect x='6' y='14' width='1' height='1' fill='#8a7a6a'/>
+  <!-- Fissures -->
+  <rect x='5' y='16' width='1' height='3' fill='#5a4a3a'/>
+  <rect x='7' y='19' width='1' height='2' fill='#5a4a3a'/>
+
+  <!-- MUR CENTRAL (le plus haut, avec arcade) -->
+  <rect x='11' y='10' width='10' height='16' fill='#968676'/>
+  <!-- Arcade (arche effondrée) -->
+  <rect x='13' y='18' width='6' height='8' fill='none'/>
+  <rect x='13' y='18' width='2' height='8' fill='#968676'/>
+  <rect x='17' y='18' width='2' height='8' fill='#968676'/>
+  <rect x='13' y='18' width='6' height='2' fill='#968676'/>
+  <!-- Trou arche -->
+  <rect x='14' y='20' width='4' height='6' fill='#2a1f14' opacity='0.6'/>
+  <!-- Crénelage central cassé -->
+  <rect x='11' y='7' width='2' height='3' fill='#968676'/>
+  <rect x='14' y='8' width='2' height='2' fill='#968676'/>
+  <rect x='18' y='6' width='2' height='4' fill='#968676'/>
+  <!-- Fissures mur central -->
+  <rect x='12' y='12' width='1' height='4' fill='#5a4a3a'/>
+  <rect x='19' y='14' width='1' height='5' fill='#5a4a3a'/>
+  <rect x='15' y='10' width='1' height='3' fill='#5a4a3a'/>
+
+  <!-- MUR DROIT (partiellement effondré) -->
+  <rect x='23' y='16' width='5' height='10' fill='#8a7a6a'/>
+  <rect x='23' y='13' width='4' height='4' fill='#8a7a6a'/>
+  <rect x='24' y='11' width='2' height='3' fill='#8a7a6a'/>
+  <!-- Crénelage droit -->
+  <rect x='24' y='10' width='1' height='2' fill='#8a7a6a'/>
+  <rect x='26' y='12' width='1' height='1' fill='#8a7a6a'/>
+  <!-- Fissure -->
+  <rect x='25' y='15' width='1' height='4' fill='#5a4a3a'/>
+
+  <!-- DÉCOMBRES AU SOL -->
+  <rect x='3' y='24' width='3' height='2' fill='#7a6a5a'/>
+  <rect x='8' y='23' width='2' height='2' fill='#7a6a5a'/>
+  <rect x='20' y='24' width='3' height='2' fill='#7a6a5a'/>
+  <rect x='26' y='23' width='4' height='2' fill='#7a6a5a'/>
+  <rect x='1' y='25' width='2' height='1' fill='#6a5a4a'/>
+
+  <!-- MOUSSE / VÉGÉTATION sur les murs -->
+  <rect x='4' y='12' width='2' height='1' fill='#4a7a3a' opacity='0.8'/>
+  <rect x='11' y='10' width='3' height='1' fill='#4a7a3a' opacity='0.7'/>
+  <rect x='18' y='6' width='2' height='1' fill='#4a7a3a' opacity='0.8'/>
+  <rect x='23' y='13' width='2' height='1' fill='#4a7a3a' opacity='0.7'/>
+  <rect x='6' y='18' width='2' height='1' fill='#5a9a4a' opacity='0.6'/>
+  <rect x='19' y='16' width='1' height='2' fill='#5a9a4a' opacity='0.6'/>
+</svg>
+`),
+  city: svgDataUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' shape-rendering='crispEdges'>
+  <rect width='32' height='32' fill='none'/>
+
+  <!-- SOL -->
+  <rect x='0' y='27' width='32' height='5' fill='#4a7a3a'/>
+
+  <!-- CORPS DE LA MAISON -->
+  <rect x='6' y='16' width='20' height='11' fill='#c8a06a'/>
+
+  <!-- TOIT -->
+  <rect x='5' y='15' width='22' height='2' fill='#8b3a2a'/>
+  <rect x='7' y='13' width='18' height='2' fill='#9b4a3a'/>
+  <rect x='9' y='11' width='14' height='2' fill='#8b3a2a'/>
+  <rect x='11' y='9' width='10' height='2' fill='#9b4a3a'/>
+  <rect x='13' y='7' width='6' height='2' fill='#8b3a2a'/>
+
+  <!-- CHEMINÉE -->
+  <rect x='20' y='4' width='3' height='7' fill='#7a5a4a'/>
+  <rect x='19' y='4' width='5' height='2' fill='#6a4a3a'/>
+  <!-- Fumée -->
+  <rect x='20' y='2' width='2' height='2' fill='#d0d0d0' opacity='0.6'/>
+  <rect x='21' y='1' width='2' height='1' fill='#d0d0d0' opacity='0.4'/>
+
+  <!-- PORTE -->
+  <rect x='14' y='20' width='4' height='7' fill='#5c3d1e'/>
+  <rect x='15' y='21' width='1' height='1' fill='#c8a040'/>
+
+  <!-- FENÊTRE GAUCHE -->
+  <rect x='8' y='19' width='4' height='4' fill='#a8d0f0'/>
+  <rect x='9' y='20' width='1' height='2' fill='#7ab0d8'/>
+  <rect x='8' y='21' width='4' height='1' fill='#7ab0d8'/>
+  <!-- Lumière fenêtre gauche -->
+  <rect x='10' y='19' width='2' height='2' fill='#ffd76b' opacity='0.5'/>
+
+  <!-- FENÊTRE DROITE -->
+  <rect x='20' y='19' width='4' height='4' fill='#a8d0f0'/>
+  <rect x='21' y='20' width='1' height='2' fill='#7ab0d8'/>
+  <rect x='20' y='21' width='4' height='1' fill='#7ab0d8'/>
+  <!-- Lumière fenêtre droite -->
+  <rect x='22' y='19' width='2' height='2' fill='#ffd76b' opacity='0.5'/>
+
+  <!-- CHEMIN devant la porte -->
+  <rect x='14' y='27' width='4' height='5' fill='#b09060'/>
+</svg>
+`)
 };
 
 
