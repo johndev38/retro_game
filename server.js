@@ -129,31 +129,48 @@ const items = {
 
 const zoneIdeas = {
   plains: {
-    title: 'Plaine du Sprint Calme',
-    text: 'Idée: réduire la dette légère et préparer les stories du sprint suivant.'
+    title: 'Prairie du Sprint Stable',
+    text: 'Zone calme: on avance au rythme prévu, peu d\'interruptions, bonne visibilité sur les priorités.'
   },
   volcano: {
-    title: 'Zone Volcanique des Incidents',
-    text: 'Idée: lancer un swarm de 30 min puis rédiger un mini post-mortem sans blâme.'
+    title: 'Volcan de la Pression',
+    text: 'Ici, la pression a monté: urgences, délais courts et décisions rapides. Idée rétro: identifier ce qui a créé la surchauffe.'
   },
   forest: {
     title: 'Forêt des Explorations',
-    text: 'Idée: planifier un spike timeboxé pour tester un choix technique risqué.'
+    text: 'Zone d\'expérimentation: spikes, pistes techniques, incertitudes à clarifier avant de s\'engager.'
   },
   lake: {
     title: 'Lac des Feedbacks',
-    text: 'Idée: organiser une rétro flash orientée voix du client et apprentissages.'
+    text: 'Moment de recul: retours utilisateurs, qualité perçue, ajustements utiles pour le prochain sprint.'
+  },
+  island: {
+    title: 'Île du Calme',
+    text: 'Petit havre: focus, concentration et entraide. Idée rétro: ce qui nous a aidés à préserver ce calme.'
+  },
+  ruins: {
+    title: 'Ruines de la Dette',
+    text: 'Anciennes décisions qui pèsent encore. Idée rétro: choisir 1 dette à traiter en priorité et son bénéfice attendu.'
+  },
+  city: {
+    title: 'Ville des Livraisons',
+    text: 'Zone de livraison continue: release, monitoring, retours terrain. Idée rétro: fluidifier le passage vers la prod.'
   }
 };
 
+
 const map = Array.from({ length: MAP_HEIGHT }, (_, y) =>
   Array.from({ length: MAP_WIDTH }, (_, x) => {
-    if (x > 14 && y < 6) return 'volcano';
-    if (x < 7 && y > 8) return 'forest';
-    if (x > 15 && y > 10) return 'lake';
+    if (x > 16 && y < 5) return 'volcano';
+    if (x < 7 && y > 9) return 'forest';
+    if (x > 16 && y > 11) return 'lake';
+    if (x >= 9 && x <= 13 && y >= 6 && y <= 9) return 'island';
+    if (x >= 2 && x <= 6 && y >= 3 && y <= 6) return 'ruins';
+    if (x >= 12 && x <= 18 && y >= 7 && y <= 10) return 'city';
     return 'plains';
   })
 );
+
 
 const rooms = new Map();
 const players = new Map();
