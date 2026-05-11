@@ -114,8 +114,11 @@ function drawRolePreview() {
     name.textContent = role.name;
 
     const preview = () => previewRoleDescription(id);
+    const resetPreview = () => previewRoleDescription(selectedRole || roleSelect.value);
     card.addEventListener('mouseenter', preview);
     card.addEventListener('focus', preview);
+    card.addEventListener('mouseleave', resetPreview);
+    card.addEventListener('blur', resetPreview);
     card.addEventListener('click', () => {
       roleSelect.value = id;
       roleSelect.dispatchEvent(new Event('change'));
